@@ -1,0 +1,8 @@
+__pycache__/
+.pytest_cache/
+out/
+*.pmc
+docs/guide/*.aux
+docs/guide/*.log
+docs/guide/*.out
+docs/guide/*.toc
