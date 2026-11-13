@@ -42,9 +42,33 @@ Visualisation du streaming (serveur fourni par le projet OBJA) :
 Le fichier OBJA contient une ligne `s` après le maillage de base puis après chaque
 niveau : elle déclare la taille cumulée du flux compressé, c'est-à-dire le vrai débit.
 
+### Visualisation niveau par niveau (sans serveur)
+
+Le visualiseur OpenGL lit directement le flux compressé `.pmc` et affiche le maillage
+après M0 puis après chaque niveau.
+
+```
+pip install glfw PyOpenGL
+python main.py example/suzanne.obj --no-eval       # produit out/suzanne.pmc
+python tools/view_pmc.py out/suzanne.pmc
+```
+
+| Touche | Effet |
+|---|---|
+| → / ← | niveau suivant / précédent |
+| Début / Fin | maillage de base / maillage complet |
+| C | surbrillance des faces ajoutées au niveau |
+| W | afficher / masquer les arêtes |
+| R | vue initiale |
+| souris | clic gauche : tourner, clic droit : déplacer, molette : zoomer |
+| Échap | quitter |
+
+Le titre de la fenêtre indique le niveau, le nombre de sommets et de faces,
+et la quantité du flux reçue (octets et bits par sommet).
+
 ## Outils
 ```
-python -m pytest tests                              # 66 tests
+python -m pytest tests                              # 67 tests
 python tools/check_mesh.py example/suzanne.obj        # diagnostic d'un maillage
 python tools/compare_schemes.py models/fandisk.obj  # 4 / 2 / auto
 python tools/benchmark.py example/*.obj             # tableau et courbes par modèle
