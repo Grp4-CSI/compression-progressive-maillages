@@ -92,6 +92,77 @@ Résultats sur les modèles du site : `docs/benchmark/resultats.md`.
 | `main.py` | pipeline en ligne de commande |
 | `tools/`, `tests/`, `models/`, `docs/` | outils, tests, modèles de test, documentation |
 
-## Usage de l'IA
+## Utilisation de l’intelligence artificielle
 
-On va le compléter 
+L’IA a été utilisée comme outil d’aide à la compréhension, à la conception, au développement et à la présentation du projet. Ses propositions ont été examinées, testées et adaptées par le groupe.
+
+### 1. Compréhension de l’article
+
+L’IA nous a aidés à comprendre l’article de Cohen-Or, Levin et Remez (1999), notamment les étapes de compression progressive, les méthodes de coloration et la reconstruction du maillage. Elle nous a également permis d’identifier les choix laissés à notre implémentation, ainsi que les limites et hypothèses de la méthode.
+
+**Exemple de prompt utilisé :**
+
+> Nous travaillons sur une implémentation de l’article « Progressive Compression of Arbitrary Triangular Meshes » de Cohen-Or, Levin et Remez (1999). Aide-nous à comprendre précisément la méthode, étape par étape.
+>
+> Pour chaque mécanisme, distingue ce qui est explicitement décrit dans l’article de ce qui relève d’une hypothèse ou d’un choix d’implémentation. Explique également les contraintes topologiques, les limites de la méthode et les difficultés possibles lors de son implémentation.
+>
+> Ne présente pas les informations manquantes comme des faits : signale les ambiguïtés et indique les points qui doivent être vérifiés directement dans l’article.
+
+### 2. Réflexion sur les choix techniques
+
+L’IA nous a aidés à comparer et à questionner plusieurs choix d’implémentation :
+- **Sélection des sommets indépendants :** réflexion sur les stratégies de parcours et la prise en compte de la valence des sommets.
+- **Ordre de reconstruction :** comparaison entre un parcours en largeur et un tri canonique, notamment pour garantir un ordre déterministe.
+- **Coloration des patches :** comparaison des méthodes à 2 couleurs, 4 couleurs et du choix automatique. Les résultats obtenus nous ont conduits à privilégier la méthode à 4 couleurs.
+- **Robustesse :** proposition de vérifications supplémentaires. Certaines étant trop restrictives sur les modèles du site, nous avons préféré signaler les défauts et mettre à l’écart les faces non-manifold sans bloquer systématiquement le traitement.
+
+**Exemple de prompt utilisé :**
+
+> Nous implémentons une méthode de compression progressive de maillages triangulaires. Nous devons faire plusieurs choix qui ne sont pas nécessairement imposés par l’article : stratégie de parcours des sommets indépendants, ordre déterministe de reconstruction et méthode de coloration des patches (2 couleurs, 4 couleurs ou choix automatique).
+>
+> Compare les différentes possibilités en expliquant leurs avantages, leurs inconvénients et leurs conséquences sur la compression, la reconstruction et la robustesse.
+>
+> Ne choisis pas automatiquement une solution à notre place. Présente les critères permettant de trancher et les expériences à réaliser pour vérifier les hypothèses. Distingue les conclusions théoriques des points qui nécessitent des mesures sur nos propres modèles.
+
+
+### 3. Tests
+
+Une partie des tests unitaires et d’intégration a été générée avec l’aide de l’IA. Au début du projet, nous avons utilisé des modèles OBJ de référence trouvés en ligne, les modèles officiels du site n’étant pas encore disponibles.
+
+Les tests proposés ont été relus, vérifiés, exécutés et adaptés par le groupe. La validation finale a ensuite été réalisée sur les huit modèles fournis par le site.
+
+**Exemple de prompt utilisé :**
+
+> Nous développons un encodeur et un décodeur pour une méthode de compression progressive de maillages triangulaires. Propose une série de tests unitaires et d’intégration couvrant la sélection de sommets indépendants, l’identification des patches, la coloration, la suppression et la réinsertion des sommets, la conservation de la connectivité et la lecture du flux compressé.
+>
+> Pour chaque test, précise le comportement attendu, les propriétés à vérifier et les cas limites à envisager.
+>
+> N’invente pas de résultats d’exécution. Signale les hypothèses nécessaires et privilégie des tests reproductibles sur de petits modèles OBJ dont les résultats peuvent être vérifiés. Le code proposé doit être adapté à notre architecture existante.
+
+### 4. Aide au développement
+
+L’IA nous a aidés à améliorer la structure du code, notamment les signatures de fonctions, les annotations de types, les commentaires et la répartition des responsabilités entre modules.
+
+Elle nous a également orientés vers certaines bibliothèques existantes. Nous avons notamment étudié OpenMesh, sans le retenir, car notre structure half-edge interne répondait déjà à nos besoins. Des bibliothèques spécialisées en compression ont aussi été envisagées.
+
+### 5. Visualisation OpenGL
+
+L’IA nous a accompagnés dans la création du visualiseur OpenGL, notamment pour la prise en main des buffers, des shaders, de la caméra et du rendu des triangles.
+
+Le visualiseur exploite les états réellement produits par notre décodeur afin de montrer la reconstruction progressive du maillage, les faces ajoutées et l’évolution du nombre d’octets reçus.
+
+**Exemple de prompt utilisé :**
+
+> Nous souhaitons développer un visualiseur OpenGL pour notre projet de compression progressive de maillages. Il doit afficher les états successifs réellement produits par notre décodeur, afin de visualiser l’ajout progressif des faces et l’évolution du nombre d’octets reçus.
+>
+> Aide-nous à comprendre les éléments nécessaires en OpenGL (buffers, shaders, caméra, transformations et rendu des triangles) et propose une architecture adaptée.
+>
+> Le visualiseur ne doit pas implémenter sa propre méthode de simplification ou de reconstruction : il doit exploiter les données produites par notre décodeur. Tiens compte de notre architecture existante et explique les modifications nécessaires avant de proposer du code.
+
+### 6. Illustrations de la présentation
+
+Plusieurs schémas de la présentation ont été générés avec l’aide de l’IA pour illustrer les étapes de décimation, les patches, les méthodes de coloration, la prédiction géométrique et la réinsertion des sommets.
+
+### 7. Vérification des propositions
+
+Les réponses de l’IA ont servi de pistes de réflexion et non de références systématiques. Les choix finaux ont été confrontés à l’article, à notre implémentation, aux tests et aux résultats expérimentaux.
